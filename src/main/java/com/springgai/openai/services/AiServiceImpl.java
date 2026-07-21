@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.springgai.openai.model.ClasificacionTicket;
 import com.springgai.openai.model.CodeDto;
+import com.springgai.openai.model.CodeExplanation;
 import com.springgai.openai.model.InformacionCiudad;
+import com.springgai.openai.model.InformacionJson;
 import com.springgai.openai.model.Requirement;
 
 @Service
@@ -71,8 +73,10 @@ public class AiServiceImpl implements AiService {
 				.user(userPrompt).call().content()
 
 		;
-
+ 
 	}
+	
+	// devolver un json
 
 	@Override
 	public String chatFormat(String topic) {
@@ -110,58 +114,115 @@ public class AiServiceImpl implements AiService {
 	@Override
 	public InformacionCiudad informacionCiudades(String ciudad) {
 		// TODO Auto-generated method stub
-		
-		
+
 		return chatClient.prompt().system("""
 				Eres un asistente experto en geografia.
 				Responde solo con la informacion correcta y en formato JSON.
-				
+
 				""").user("""
-						Devuelve la informacion en espanol de la ciudad %s con este formato: 
-						{
-							"ciudad":"string",
-							"pais":"string",
-							"habitantes": number,
-							"descripcion": "string"
-						}
-						""".formatted(ciudad)).call().entity(InformacionCiudad.class);
+				Devuelve la informacion en espanol de la ciudad %s con este formato:
+				{
+					"ciudad":"string",
+					"pais":"string",
+					"habitantes": number,
+					"descripcion": "string"
+				}
+				""".formatted(ciudad)).call().entity(InformacionCiudad.class);
 	}
 
 	@Override
 	public ClasificacionTicket clasificarTicket(String texto) {
 		// TODO Auto-generated method stub
 		return chatClient.prompt().system("""
-				Eres un siteman de clasificacion de ticket. Responde solo en json valido.
-				
+				Eres un sitema de clasificacion de ticket. Responde solo en json valido.
+
 				""").user("""
-						Clasifica el siguiente texto en una categoria y prioridad. 
-						Categorias: 
-						- Soporte
-						- Ventas
-						- Reclamo
-						
-						Formato: 
-						{
-							"categoria":"string",
-							"razon":"string",
-							"prioridad":number
-							
-						}
-						
-						Texto: %s
-						
-						""").call().entity(ClasificacionTicket.class);
+				Clasifica el siguiente texto en una categoria y prioridad.
+				Categorias:
+				- Soporte
+				- Ventas
+				- Reclamo
+
+				Formato:
+				{
+					"categoria":"string",
+					"razon":"string",
+					"prioridad":number
+
+				}
+
+				Texto: %s
+
+				""").call().entity(ClasificacionTicket.class);
 	}
 
+	@Override
+	public InformacionJson informacionJson(String objetoJson) {
+		// TODO Auto-generated method stub
+		return chatClient.prompt().system("""
+				Eres un sistema que genera codigo React. Responde solo con json valido.
+				""").user("""
+				El formato del json sera el siguientes:
+
+				{
+					"requerimiento":"string",
+					"resumen":"string",
+					"codigo":"string",
+					"notas":"string"
+				}
+				""").call().entity(InformacionJson.class);
+	}
+
+	@Override
+	public CodeExplanation explainCodeType(String codigo) {
+		// TODO Auto-generated method stub
+		return chatClient.prompt().system("""
+				Eres un profesor expoerto en progracion react.
+				Explica el codigo simple y linea por linea
+				Devuelve el json valido.
+				no uses markdown.
+				
+				Formato exacto:
+				
+				{
+					"lenguaje":"string",
+					"summary":"string",
+					"line_by_line":[
+					
+						{
+							"line":1,
+							"explanation":"string"
+						}
+						
+					],
+					"final_explanation":"string"
+				}
+				
+				
+				""").user(codigo).call().entity(CodeExplanation.class);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 }
-
-
-
-
-
-
-
-
-
-
-
