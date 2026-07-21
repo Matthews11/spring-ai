@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.springgai.openai.model.ClasificacionTicket;
 import com.springgai.openai.model.CodeDto;
+import com.springgai.openai.model.CodeExplanation;
 import com.springgai.openai.model.InformacionCiudad;
+import com.springgai.openai.model.InformacionJson;
 import com.springgai.openai.model.Requirement;
 import com.springgai.openai.services.AiService;
 
@@ -73,6 +75,35 @@ public class AiController {
 	public ClasificacionTicket clasificadorTicket(@RequestBody String prompt) {
 		return aiService.clasificarTicket(prompt);
 	}
+	
+	
+	
+	@PostMapping("/informacion-json")
+	public InformacionJson brindarInformacionJson(@RequestBody String objetoJson) {
+		return aiService.informacionJson(objetoJson);
+	}
+	
+	
+	@PostMapping("/explain-code-json")
+	public CodeExplanation brindarExplicacionCodigo(@RequestBody String codigo) {
+		return aiService.explainCodeType(codigo);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

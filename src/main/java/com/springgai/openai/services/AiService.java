@@ -2,7 +2,9 @@ package com.springgai.openai.services;
 
 import com.springgai.openai.model.ClasificacionTicket;
 import com.springgai.openai.model.CodeDto;
+import com.springgai.openai.model.CodeExplanation;
 import com.springgai.openai.model.InformacionCiudad;
+import com.springgai.openai.model.InformacionJson;
 import com.springgai.openai.model.Requirement;
  
 public interface AiService {
@@ -20,4 +22,9 @@ public interface AiService {
 	InformacionCiudad informacionCiudades(String ciudad);
 	ClasificacionTicket clasificarTicket(String texto);
 
+	InformacionJson informacionJson(String objetoJson);
+	CodeExplanation explainCodeType(String codigo);
+	
 }
+
+ 
