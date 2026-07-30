@@ -3,9 +3,11 @@ package com.springgai.openai.services;
 import java.util.Map;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.stereotype.Service;
 
+import com.springgai.openai.model.ArchitectEntity;
 import com.springgai.openai.model.ClasificacionTicket;
 import com.springgai.openai.model.CodeDto;
 import com.springgai.openai.model.CodeExplanation;
@@ -205,7 +207,31 @@ public class AiServiceImpl implements AiService {
 	
 	
 	
-	
+	@Override
+	public ArchitectEntity expertoArquitecto(String prompt) {
+		// TODO Auto-generated method stub
+		return chatClient.prompt().system("""
+				Eres un arquitecto de software experto en microservicios, spring boot y arquitectura de sistemas,
+				Devuelve solo JSON valido, no uses markdonw.
+				Formato exacto:
+				{
+					"pregunta":"string",
+					"respuesta":"string",
+					"pros":["string","string","string"],
+					"contras":["string","string"],
+					"final_decision":"string"
+				}
+				""").user(prompt).call().entity(ArchitectEntity.class);
+	}
+
+	@Override
+	public Map<String, Object> metadata(String prompt) {
+		// TODO Auto-generated method stub
+		ChatResponse response = chatClient.prompt().user(prompt).call().chatResponse();
+		
+		return Map.of("answer", response.getResult().getOutput().getText(),
+				"metadata", response.getMetadata());
+	}
 	
 	
 	
