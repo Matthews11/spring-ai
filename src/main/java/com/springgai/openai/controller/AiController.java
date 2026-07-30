@@ -1,11 +1,14 @@
 package com.springgai.openai.controller;
 
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springgai.openai.model.ArchitectEntity;
 import com.springgai.openai.model.ClasificacionTicket;
 import com.springgai.openai.model.CodeDto;
 import com.springgai.openai.model.CodeExplanation;
@@ -89,8 +92,16 @@ public class AiController {
 		return aiService.explainCodeType(codigo);
 	}
 	
+	@PostMapping("/arquitecto")
+	public ArchitectEntity expertoArquitecto(@RequestBody String prompt) {
+		return aiService.expertoArquitecto(prompt);
+	}
 	
 	
+	@GetMapping("/metadata")
+	public Map<String, Object> chatMetada(@RequestParam String prompt) {
+		return aiService.metadata(prompt);
+	}
 	
 	
 	

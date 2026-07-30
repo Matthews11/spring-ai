@@ -1,5 +1,8 @@
 package com.springgai.openai.services;
 
+import java.util.Map;
+
+import com.springgai.openai.model.ArchitectEntity;
 import com.springgai.openai.model.ClasificacionTicket;
 import com.springgai.openai.model.CodeDto;
 import com.springgai.openai.model.CodeExplanation;
@@ -24,6 +27,10 @@ public interface AiService {
 
 	InformacionJson informacionJson(String objetoJson);
 	CodeExplanation explainCodeType(String codigo);
+	
+    ArchitectEntity expertoArquitecto(String prompt);
+ 	
+	Map<String, Object> metadata(String prompt);
 	
 }
 
